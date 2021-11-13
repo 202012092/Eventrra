@@ -1,0 +1,20 @@
+{% extends 'background.html' %}
+
+{% block content %}
+<h1>Add Venue</h1>
+<form action="venueRegistration" method='post'>
+    
+    {% csrf_token %}
+    {% if error %}
+    <h5>{{error}}</h5>
+    {% endif %}
+    Enter Venue Name:<input type="text" name="vname"><br>
+    Enter Venue Address:<input type="text" name="address"><br>
+    Enter Venue Description:<input type="text" name="venuedesc"><br>
+    Enter Renting Cost(per hour):<input type="text" name="venuecost"><br>
+    Enter Venue Capacity:<input type="text" name="venuecap"><br>
+    Enter Venue Seating Type:<input type="text" name="venuesit"><br>
+    Enter Venue Special Features:<input type="text" name="venuefeat"><br>
+    <input type="submit">
+</form>
+{% endblock %}

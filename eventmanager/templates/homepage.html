@@ -1,0 +1,36 @@
+{% extends 'background.html' %}
+
+{% block content %}
+<h1>Welcome</h1>
+<h3>Login for Event Hosts</h3>
+<form action="eventHostLogin" method='post'>
+    
+    {% csrf_token %}
+    {% if eh_error %}
+    <h5>{{eh_error}}</h5>
+    {% endif %}
+    {% if eh_success %}
+    <h5>{{eh_success}}</h5>
+    {% endif %}
+    Enter EmailID:<input type="email" name="emailid"><br>
+    Enter Password:<input type="password" name="password"><br>
+    <input type="submit">
+</form>
+<a href={% url 'ehregister' %}>Click here to register as Event Host</a>
+
+<h3>Login for Venue Holders</h3>
+<form action="venueHolderLogin" method='post'>
+    
+    {% csrf_token %}
+    {% if vh_error %}
+    <h5>{{vh_error}}</h5>
+    {% endif %}
+    {% if vh_success %}
+    <h5>{{vh_success}}</h5>
+    {% endif %}
+    Enter EmailID:<input type="email" name="emailid"><br>
+    Enter Password:<input type="password" name="password"><br>
+    <input type="submit">
+</form>
+<a href={% url 'vhregister' %}>Click here to register as Venue Holder</a>
+{% endblock %}

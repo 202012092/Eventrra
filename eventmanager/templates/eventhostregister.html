@@ -1,0 +1,18 @@
+{% extends 'background.html' %}
+
+{% block content %}
+<h1>Event Host Registration</h1>
+<form action="eventHostRegisteration" method='post'>
+    
+    {% csrf_token %}
+    {% if error %}
+    <h5>{{error}}</h5>
+    {% endif %}
+    Enter First Name:<input type="text" name="fname"><br>
+    Enter Last Name:<input type="text" name="lname"><br>
+    Enter EmailID:<input type="email" name="emailid"><br>
+    Enter Password:<input type="password" name="password"><br>
+    Confirm Password:<input type="password" name="conpassword"><br>
+    <input type="submit">
+</form>
+{% endblock %}

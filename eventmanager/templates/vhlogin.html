@@ -1,0 +1,10 @@
+<h1>Hello {{venueholder.first_name}}</h1>
+<a href={% url 'ehlogout' %}>Logout</a><br>
+
+<a href={% url 'addvenue' %}>Add Venue</a><br>
+
+{% if v_success %}
+<h5>{{v_success}}</h5>
+{% endif %}
+
+Your List of venues <button>Edit</button><button>Delete</button>
