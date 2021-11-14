@@ -136,9 +136,10 @@ def vhlogin(request):
         
         if not error_message:
             venueholder = VenueHolderAccounts.objects.get(email = email)
-            global current_user 
+            global current_user
             current_user = venueholder
-            return render(request, 'vhlogin.html',{'venueholder':current_user})
+            vhvenuelist = Venues.objects.filter(venue_holder_id = current_user.venueholder_id)
+            return render(request, 'vhlogin.html',{'venueholder':current_user,'vlist':vhvenuelist})
         else:
             return render(request, 'homepage.html', {'vh_error': error_message})
     else:

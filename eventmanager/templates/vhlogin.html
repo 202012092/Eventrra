@@ -7,4 +7,7 @@
 <h5>{{v_success}}</h5>
 {% endif %}
 
-Your List of venues <button>Edit</button><button>Delete</button>
+Your List of venues<br><br><br><br>
+{% for venue in vlist %}
+    <b>{{venue.venue_name}}</b><button>Edit</button><button>Delete</button><br>
+{% endfor %}
