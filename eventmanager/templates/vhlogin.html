@@ -1,3 +1,7 @@
+{% extends 'background.html' %}
+
+{% block content %}
+
 <h1>Hello {{venueholder.first_name}}</h1>
 <a href={% url 'ehlogout' %}>Logout</a><br>
 
@@ -11,3 +15,5 @@ Your List of venues<br><br><br><br>
 {% for venue in vlist %}
     <b>{{venue.venue_name}}</b><button>Edit</button><button>Delete</button><br>
 {% endfor %}
+
+{% endblock %}

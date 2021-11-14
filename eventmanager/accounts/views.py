@@ -4,7 +4,8 @@ from django.shortcuts import render
 
 from accounts.models import EventCategories, EventHostAccounts, VenueHolderAccounts, Venues
 
-current_user = None
+vh_current_user = None
+vhvenuelist = None
 
 # Create your views here.
 def homepage(request):
@@ -136,10 +137,11 @@ def vhlogin(request):
         
         if not error_message:
             venueholder = VenueHolderAccounts.objects.get(email = email)
-            global current_user
-            current_user = venueholder
-            vhvenuelist = Venues.objects.filter(venue_holder_id = current_user.venueholder_id)
-            return render(request, 'vhlogin.html',{'venueholder':current_user,'vlist':vhvenuelist})
+            global vh_current_user
+            vh_current_user = venueholder
+            global vhvenuelist
+            vhvenuelist = Venues.objects.filter(venue_holder_id = vh_current_user.venueholder_id)
+            return render(request, 'vhlogin.html',{'venueholder':vh_current_user,'vlist':vhvenuelist})
         else:
             return render(request, 'homepage.html', {'vh_error': error_message})
     else:
@@ -189,10 +191,10 @@ def venueregister(request):
             error_message = "Special Features required"
 
         if not error_message:
-            venue = Venues(venue_name = venue_name,venue_address = venue_address, venue_description = venue_description, venue_cost = venue_cost, venue_capacity = venue_capacity, venue_seating_type = venue_seating_type, venue_special_features = venue_special_features, category_id = cat, venue_holder_id = current_user)
+            venue = Venues(venue_name = venue_name,venue_address = venue_address, venue_description = venue_description, venue_cost = venue_cost, venue_capacity = venue_capacity, venue_seating_type = venue_seating_type, venue_special_features = venue_special_features, category_id = cat, venue_holder_id = vh_current_user)
             venue.save()
 
-            return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Added'})
+            return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Added','venueholder':vh_current_user,'vlist':vhvenuelist})
         else:
             return render(request, 'addvenue.html', {'error': error_message})
     else:
