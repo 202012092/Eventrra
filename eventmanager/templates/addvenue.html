@@ -15,6 +15,12 @@
     Enter Venue Capacity:<input type="text" name="venuecap"><br>
     Enter Venue Seating Type:<input type="text" name="venuesit"><br>
     Enter Venue Special Features:<input type="text" name="venuefeat"><br>
+    Select Category:
+    <select name="categories" id="categories">
+        {% for cat in cats %}
+            <option value={{cat.category_id}}>{{cat.category_name}}</option>
+        {% endfor %}
+    </select><br>
     <input type="submit">
 </form>
 {% endblock %}
