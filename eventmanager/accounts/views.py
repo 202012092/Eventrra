@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from accounts.models import EventCategories, EventHostAccounts, VenueHolderAccounts, Venues
 
+eh_current_user = None
 vh_current_user = None
 vhvenuelist = None
 
@@ -113,7 +114,10 @@ def ehlogin(request):
         
         if not error_message:
             eventhost = EventHostAccounts.objects.get(email = email)
-            return render(request, 'ehlogin.html',{'eventhost':eventhost})
+            global eh_current_user
+            eh_current_user = eventhost
+            venuelist = Venues.objects.all()
+            return render(request, 'ehlogin.html',{'eventhost':eh_current_user,'allvlist':venuelist})
         else:
             return render(request, 'homepage.html', {'eh_error': error_message})
     else:
