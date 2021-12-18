@@ -7,6 +7,7 @@ from accounts.models import EventCategories, EventHostAccounts, VenueHolderAccou
 eh_current_user = None
 vh_current_user = None
 vhvenuelist = None
+editrow = None
 
 # Create your views here.
 def homepage(request):
@@ -198,8 +199,43 @@ def venueregister(request):
             venue = Venues(venue_name = venue_name,venue_address = venue_address, venue_description = venue_description, venue_cost = venue_cost, venue_capacity = venue_capacity, venue_seating_type = venue_seating_type, venue_special_features = venue_special_features, category_id = cat, venue_holder_id = vh_current_user)
             venue.save()
 
+            global vhvenuelist
+            vhvenuelist = Venues.objects.filter(venue_holder_id = vh_current_user.venueholder_id)
             return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Added','venueholder':vh_current_user,'vlist':vhvenuelist})
         else:
             return render(request, 'addvenue.html', {'error': error_message})
     else:
-        return render(request, 'addvenue.html.html')
+        return render(request, 'addvenue.html')
+
+def editvenue(request, data):
+    global editrow
+    editrow = Venues.objects.get(venue_id = data)
+    cats = EventCategories.objects.all()
+    return render(request, 'editvenue.html',{'venue':editrow,'cats':cats})
+
+def deletevenue(request, data):
+    deleterow = Venues.objects.get(venue_id = data)
+    deleterow.delete()
+    global vhvenuelist
+    vhvenuelist = Venues.objects.filter(venue_holder_id = vh_current_user.venueholder_id)
+    return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Deleted','venueholder':vh_current_user,'vlist':vhvenuelist})
+
+def venueupdate(request):
+    if request.method == 'POST':
+        editrow.venue_name = request.POST['vname']
+        editrow.venue_address = request.POST['address']
+        editrow.venue_description = request.POST['venuedesc']
+        editrow.venue_cost = request.POST['venuecost']
+        editrow.venue_capacity = request.POST['venuecap']
+        editrow.venue_seating_type = request.POST['venuesit']
+        editrow.venue_special_features = request.POST['venuefeat']
+        category_id = request.POST['categories']
+        cat = EventCategories.objects.get(category_id = category_id)
+        editrow.category_id = cat
+
+        editrow.save()
+        global vhvenuelist
+        vhvenuelist = Venues.objects.filter(venue_holder_id = vh_current_user.venueholder_id)
+        return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Edited','venueholder':vh_current_user,'vlist':vhvenuelist})
+    else:
+        return render(request, 'editvenue.html')
