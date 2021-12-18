@@ -8,7 +8,7 @@
 <h3>Venues</h3><br><br><br><br>
 {% for venue in allvlist %}
 
-<b>{{venue.venue_name}}</b><br>
+<a href="{% url 'venuedynamic' venue.venue_id %}"><b>{{venue.venue_name}}</b></a><br>
 
 {% endfor %}
 

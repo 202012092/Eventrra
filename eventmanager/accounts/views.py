@@ -239,3 +239,14 @@ def venueupdate(request):
         return render(request, 'vhlogin.html',{'v_success': 'Venue Successfully Edited','venueholder':vh_current_user,'vlist':vhvenuelist})
     else:
         return render(request, 'editvenue.html')
+
+
+
+
+#Venue Template
+
+def venuedynamic(request, data):
+    venue = Venues.objects.get(venue_id = data)
+    category = EventCategories.objects.get(category_id = venue.category_id_id)
+    venueholder = VenueHolderAccounts.objects.get(venueholder_id = venue.venue_holder_id_id)
+    return render(request, 'venuedisplay.html',{'venue':venue,'category':category,'venueholder':venueholder})

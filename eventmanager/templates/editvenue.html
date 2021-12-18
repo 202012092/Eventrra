@@ -6,12 +6,12 @@
     
     {% csrf_token %}
     Venue Name:<input type="text" name="vname" value="{{venue.venue_name}}"><br>
-    Venue Address:<input type="text" name="address" value={{venue.venue_address}}><br>
-    Venue Description:<input type="text" name="venuedesc" value={{venue.venue_description}}><br>
+    Venue Address:<input type="text" name="address" value="{{venue.venue_address}}"><br>
+    Venue Description:<input type="text" name="venuedesc" value="{{venue.venue_description}}"><br>
     Renting Cost(per hour):<input type="text" name="venuecost" value={{venue.venue_cost}}><br>
     Venue Capacity:<input type="text" name="venuecap" value={{venue.venue_capacity}}><br>
-    Venue Seating Type:<input type="text" name="venuesit" value={{venue.venue_seating_type}}><br>
-    Venue Special Features:<input type="text" name="venuefeat" value={{venue.venue_special_features}}><br>
+    Venue Seating Type:<input type="text" name="venuesit" value="{{venue.venue_seating_type}}"><br>
+    Venue Special Features:<input type="text" name="venuefeat" value="{{venue.venue_special_features}}"><br>
     Select Category:
     <select name="categories" id="categories">
         {% for cat in cats %}
