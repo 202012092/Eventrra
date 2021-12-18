@@ -14,4 +14,18 @@ VSF: {{venue.venue_special_features}}<br>
 VCat: {{category.category_name}}<br>
 VVholder: {{venueholder.first_name}}<br>
 
+<h1>For Booking: </h1>
+<form action="eventBooking" method="post">
+    {% csrf_token %}
+    Enter Date for Event: <input type="number" name="date" min="1" max="31">(Date Format: 1,2,3....)<br>
+    Enter Month for Event: <input type="number" name="month" min="1" max="12">(Month Format: 1,2,3,....)<br>
+    Enter Start Time for Event(Starting Hour): <input type="number" name="stime" min="0" max="23">(It is based on 24 Hour time format Eg: 14 should be written in place of 2pm)<br>
+    Enter End Time for Event(Ending Hour): <input type="number" name="etime" min="0" max="23">(It is based on 24 Hour time format Eg: 14 should be written in place of 2pm)<br>
+    Example: Event at 31st October starting from 11pm and ending at 1am should be (31,10,23,1)
+    <br>Enter Number of Attendees: <input type="number" name="attendees">
+
+    <br><input type="submit">
+</form>
+<h6>Disclaimer: Booking can only be done between date after the present date and present date of next year.</h6>
+
 {% endblock %}

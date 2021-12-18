@@ -31,3 +31,13 @@ class Venues(models.Model):
     category_id = models.ForeignKey('EventCategories',on_delete=models.CASCADE)
     venue_holder_id = models.ForeignKey('VenueHolderAccounts',on_delete=models.CASCADE)
     venue_image = models.ImageField(upload_to='pics')
+
+class Events(models.Model):
+    event_id = models.AutoField(primary_key=True)
+    event_host = models.ForeignKey('EventHostAccounts',on_delete=models.CASCADE)
+    venue = models.ForeignKey('Venues',on_delete=models.CASCADE)
+    event_date = models.IntegerField()
+    event_month = models.IntegerField()
+    start_time = models.IntegerField()
+    end_time = models.IntegerField()
+    event_attendees = models.IntegerField()

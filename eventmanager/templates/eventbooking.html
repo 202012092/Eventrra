@@ -1,0 +1,14 @@
+{% extends 'background.html' %}
+
+{% block content %}
+
+{% if error %}
+<h5>{{error}}</h5>
+{% endif %}
+
+{% if success %}
+<h5>{{success}}</h5>
+<!-- <h5>You will have to login again.</h5> -->
+{% endif %}
+
+{% endblock %}

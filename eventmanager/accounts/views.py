@@ -1,13 +1,14 @@
 
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-from accounts.models import EventCategories, EventHostAccounts, VenueHolderAccounts, Venues
+from accounts.models import EventCategories, EventHostAccounts, Events, VenueHolderAccounts, Venues
 
 eh_current_user = None
 vh_current_user = None
 vhvenuelist = None
 editrow = None
+bookevent = None
 
 # Create your views here.
 def homepage(request):
@@ -252,6 +253,53 @@ def venueupdate(request):
 
 def venuedynamic(request, data):
     venue = Venues.objects.get(venue_id = data)
+    global bookevent
+    bookevent = venue
     category = EventCategories.objects.get(category_id = venue.category_id_id)
     venueholder = VenueHolderAccounts.objects.get(venueholder_id = venue.venue_holder_id_id)
     return render(request, 'venuedisplay.html',{'venue':venue,'category':category,'venueholder':venueholder})
+
+
+#Event Booking
+
+def eventbook(request):
+    if request.method == 'POST':
+        date = int(request.POST['date'])
+        month = int(request.POST['month'])
+        stime = int(request.POST['stime'])
+        etime = int(request.POST['etime'])
+        attendees = int(request.POST['attendees'])
+        
+        global eh_current_user
+        global bookevent
+
+        error_message = None
+        if(not date):
+            error_message = "Date is required"
+        elif(not month):
+            error_message = "Month is required"
+        elif(not stime):
+            error_message = "Start Time is requried"
+        elif(not etime):
+            error_message = "End Time is required"
+        elif(not attendees):
+            error_message = "Attendees is required"
+        elif(date > 30 and (month == 4 or month == 6 or month == 9 or month == 11)):
+            error_message = "Invalid Date"
+        elif((month == 2) and date > 28):
+            error_message = "Invalid Date"
+        temp = Events.objects.filter(event_month = month, event_date = date, start_time = stime, end_time = etime).count()
+        #temp2 = temp.filter(event_date = date)
+        #temp3 = temp2.filter(start_time_lte = stime)Saving _lte for <=
+        #temp4 = temp3.get(end_time_gte = etime) Saving _gte for >=
+        if(temp > 0):
+            error_message = "This timeslot is not available"
+
+        if not error_message:
+            event = Events(event_date=date,event_month=month,start_time=stime,end_time=etime,event_attendees=attendees,event_host=eh_current_user,venue=bookevent)
+            event.save()
+            return render(request,'eventbooking.html',{'success': 'Event Successfully Booked'})
+        else:
+            return render(request,'eventbooking.html',{'error':error_message})
+    else:
+        return render(request, 'venuedisplay.html')
