@@ -30,3 +30,4 @@ class Venues(models.Model):
     venue_special_features = models.CharField(max_length=100)
     category_id = models.ForeignKey('EventCategories',on_delete=models.CASCADE)
     venue_holder_id = models.ForeignKey('VenueHolderAccounts',on_delete=models.CASCADE)
+    venue_image = models.ImageField(upload_to='pics')

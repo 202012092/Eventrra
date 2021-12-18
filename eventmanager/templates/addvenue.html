@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Add Venue</h1>
-<form action="venueRegistration" method='post'>
+<form action="venueRegistration" method='post' enctype="multipart/form-data">
     
     {% csrf_token %}
     {% if error %}
@@ -21,6 +21,7 @@
             <option value={{cat.category_id}}>{{cat.category_name}}</option>
         {% endfor %}
     </select><br>
-    <input type="submit">
+    Upload Venue Image:<input type="file" name="image">
+    <br><input type="submit">
 </form>
 {% endblock %}

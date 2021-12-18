@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Edit Venue</h1>
-<form action="venueUpdate" method='post'>
+<form action="venueUpdate" method='post' enctype="multipart/form-data">
     
     {% csrf_token %}
     Venue Name:<input type="text" name="vname" value="{{venue.venue_name}}"><br>
@@ -22,6 +22,8 @@
             {% endif %}
         {% endfor %}
     </select><br>
-    <input type="submit">
+    Current Venue Image:<img src="{{venue.venue_image.url}}" height="300" width="500">
+    <br>Upload New Venue Image:<input type="file" name="image">
+    <br><input type="submit">
 </form>
 {% endblock %}

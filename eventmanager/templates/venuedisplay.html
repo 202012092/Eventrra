@@ -3,7 +3,8 @@
 {% block content %}
 
 <h1>Venue Template: {{venue.venue_name}}</h1>
-VName: {{venue.venue_name}}<br>
+Image: <img src="{{venue.venue_image.url}}" height="300" width="500">
+<br>VName: {{venue.venue_name}}<br>
 VAdd: {{venue.venue_address}}<br>
 VDesc: {{venue.venue_description}}<br>
 VCost: {{venue.venue_cost}}<br>

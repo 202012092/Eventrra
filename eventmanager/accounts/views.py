@@ -178,6 +178,7 @@ def venueregister(request):
         venue_special_features = request.POST['venuefeat']
         category_id = request.POST['categories']
         cat = EventCategories.objects.get(category_id = category_id)
+        venue_image = request.FILES['image']
 
         error_message = None
         if(not venue_name):
@@ -194,9 +195,11 @@ def venueregister(request):
             error_message = "Seating Type required"
         elif(not venue_special_features):
             error_message = "Special Features required"
+        elif(not venue_image):
+            error_message = "Venue Image required"
 
         if not error_message:
-            venue = Venues(venue_name = venue_name,venue_address = venue_address, venue_description = venue_description, venue_cost = venue_cost, venue_capacity = venue_capacity, venue_seating_type = venue_seating_type, venue_special_features = venue_special_features, category_id = cat, venue_holder_id = vh_current_user)
+            venue = Venues(venue_name = venue_name,venue_address = venue_address, venue_description = venue_description, venue_cost = venue_cost, venue_capacity = venue_capacity, venue_seating_type = venue_seating_type, venue_special_features = venue_special_features, category_id = cat, venue_holder_id = vh_current_user, venue_image = venue_image)
             venue.save()
 
             global vhvenuelist
@@ -233,6 +236,8 @@ def venueupdate(request):
         cat = EventCategories.objects.get(category_id = category_id)
         editrow.category_id = cat
 
+        if len(request.FILES) != 0:
+            editrow.venue_image = request.FILES['image']
         editrow.save()
         global vhvenuelist
         vhvenuelist = Venues.objects.filter(venue_holder_id = vh_current_user.venueholder_id)
