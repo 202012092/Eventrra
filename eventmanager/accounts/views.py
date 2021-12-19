@@ -288,6 +288,7 @@ def eventbook(request):
             error_message = "Invalid Date"
         elif((month == 2) and date > 28):
             error_message = "Invalid Date"
+            
         temp = Events.objects.filter(event_month = month, event_date = date, start_time = stime, end_time = etime).count()
         #temp2 = temp.filter(event_date = date)
         #temp3 = temp2.filter(start_time_lte = stime)Saving _lte for <=
@@ -303,3 +304,15 @@ def eventbook(request):
             return render(request,'eventbooking.html',{'error':error_message})
     else:
         return render(request, 'venuedisplay.html')
+
+
+#Booked Event List
+
+def eventlist(request, data):
+    elist = Events.objects.filter(venue = data)
+    return render(request,'eventbookedlist.html',{'elist':elist})
+
+
+def contact(request, data):
+    host = EventHostAccounts.objects.get(eventhost_id = data)
+    return render(request,'contact.html',{'contact':host})

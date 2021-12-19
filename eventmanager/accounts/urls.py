@@ -18,5 +18,7 @@ urlpatterns=[
     path('deleteVenue/<int:data>',views.deletevenue,name='deletevenue'),
     path('editVenue/venueUpdate',views.venueupdate,name='venueupdate'),
     path('venueDisplay/<int:data>',views.venuedynamic,name='venuedynamic'),
-    path('venueDisplay/eventBooking',views.eventbook,name='eventbook')
+    path('venueDisplay/eventBooking',views.eventbook,name='eventbook'),
+    path('eventList/<int:data>',views.eventlist,name='eventlist'),
+    path('contactHost/<int:data>',views.contact,name='contact')
 ]

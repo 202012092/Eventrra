@@ -1,0 +1,11 @@
+{% extends 'background.html' %}
+
+{% block content %}
+
+List of Booked Events:<br><br><br><br>
+
+{% for event in elist %}
+    {{event.event_date}}, {{event.event_month}}, {{event.start_time}}, {{event.end_time}}, {{event.event_attendees}},<b><a href="{% url 'contact' event.event_host.eventhost_id %}">Get Event Host Contact</a></b><br>
+{% endfor %}
+
+{% endblock %}

@@ -13,7 +13,7 @@
 
 Your List of venues<br><br><br><br>
 {% for venue in vlist %}
-    <b>{{venue.venue_name}}</b><a href="{% url 'editvenue' venue.venue_id %}">Edit</a><a href="{% url 'deletevenue' venue.venue_id %}">Delete</a><br>
+    <b><a href="{% url 'eventlist' venue.venue_id %}">{{venue.venue_name}}</a></b><a href="{% url 'editvenue' venue.venue_id %}">Edit</a><a href="{% url 'deletevenue' venue.venue_id %}">Delete</a><br>
 {% endfor %}
 
 {% endblock %}
